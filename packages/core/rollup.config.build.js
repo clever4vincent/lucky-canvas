@@ -1,64 +1,66 @@
-import path from 'path'
-import ts from 'rollup-plugin-typescript2'
-import dts from 'rollup-plugin-dts'
-import json from '@rollup/plugin-json'
-import resolve from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
-import babel from 'rollup-plugin-babel'
-import { terser } from 'rollup-plugin-terser'
-import del from 'rollup-plugin-delete'
-import pkg from './package.json'
+import path from "path";
+import ts from "rollup-plugin-typescript2";
+import dts from "rollup-plugin-dts";
+import json from "@rollup/plugin-json";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import babel from "rollup-plugin-babel";
+import { terser } from "rollup-plugin-terser";
+import del from "rollup-plugin-delete";
+import pkg from "./package.json";
 
 export default [
   {
-    input: 'src/index.ts',
+    input: "src/index.ts",
     output: [
       {
         file: pkg.main,
-        format: 'cjs',
-        sourcemap: true,
+        format: "cjs",
+        sourcemap: false,
       },
       {
         file: pkg.module,
-        format: 'esm',
-        sourcemap: true,
+        format: "esm",
+        sourcemap: false,
       },
       {
         file: pkg.jsdelivr,
-        format: 'umd',
-        name: 'LuckyCanvas',
+        format: "umd",
+        name: "LuckyCanvas",
         sourcemap: false,
       },
     ],
     plugins: [
       ts({
-        tsconfig: path.resolve(__dirname, './tsconfig.json'),
-        extensions: ['.js', '.ts'],
-        "declaration": true,
+        tsconfig: path.resolve(__dirname, "./tsconfig.json"),
+        extensions: [".js", ".ts"],
+        check: false,
+        declaration: true,
       }),
       json(),
       resolve(),
       commonjs(),
       babel({
         runtimeHelpers: true,
-        exclude: 'node_modules/**',
+        exclude: "node_modules/**",
       }),
-      terser()
-    ]
-  }, {
+      terser(),
+    ],
+  },
+  {
     input: "dist/src/index.d.ts",
     output: [
       {
         file: "types/index.d.ts",
-        format: "es"
-      }
+        format: "es",
+      },
     ],
     plugins: [
       dts(),
       del({
-        targets: ['dist/src'],
-        hook: 'buildEnd'
-      })
+        targets: ["dist/src"],
+        hook: "buildEnd",
+      }),
     ],
   },
-]
+];

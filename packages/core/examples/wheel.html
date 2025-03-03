@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body style="opacity: 1;">
-  <body>
-    <!-- <script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body style="opacity: 1">
+    <body>
+      <!-- <script>
       var documentElement = document.documentElement;
       function callback() {
         var clientWidth = documentElement.clientWidth;
@@ -18,49 +18,132 @@
       document.addEventListener('DOMContentLoaded', callback);
       window.addEventListener('orientationchange' in window ? 'orientationchange' : 'resize', callback);
     </script> -->
-    <div id="my-lucky"></div>
-    <br />
-    <button onclick="myLucky.play()">play()</button>
-    <button onclick="myLucky.stop(0)">stop(0)</button>
-    <button onclick="myLucky.stop(1)">stop(1)</button>
-    <button onclick="myLucky.stop(-1)">stop(-1)</button>
-    <button onclick="myLucky.init()">init()</button>
-    <br />
-    <button onclick="test1()">test1()</button>
-    <script src="../dist/index.umd.js"></script>
-    <script>
-      function test1() {
-        myLucky.defaultStyle.background = '#ddd'
-      }
-      const myLucky = new LuckyCanvas.LuckyWheel('#my-lucky', {
-        width: '200px',
-        height: '200px',
-        blocks: [{ padding: '1px', background: '#ccc' }],
-        prizes: [
-          { fonts: [{ text: '0', top: '0%', left: '49%' }],  },
-          { fonts: [{ text: '1', top: '10%' }] },
-          { fonts: [{ text: '2', top: '10%' }] },
-          { fonts: [{ text: '3', top: '10%' }] },
-          { fonts: [{ text: '4', top: '10%' }] },
-          { fonts: [{ text: '5', top: '10%' }] },
-        ],
-        buttons: [
-          { radius: '50%', background: '#fff' },
-        ],
-        defaultStyle: {
-          background: '#fff'
-        },
-        defaultConfig: {
-          gutter: 1
-        },
-        start () {
-          myLucky.play()
-          setTimeout(() => {
-          myLucky.stop(0)
-          })
+      <div id="my-lucky" style="margin: auto"></div>
+      <br />
+      <button onclick="myLucky.play()">play()</button>
+      <button onclick="myLucky.stop(0)">stop(0)</button>
+      <button onclick="myLucky.stop(1)">stop(1)</button>
+      <button onclick="myLucky.stop(2)">stop(2)</button>
+      <button onclick="myLucky.stop(3)">stop(3)</button>
+      <button onclick="myLucky.stop(4)">stop(4)</button>
+      <button onclick="myLucky.stop(-1)">stop(-1)</button>
+      <button onclick="myLucky.init()">init()</button>
+      <br />
+      <button onclick="test1()">test1()</button>
+      <script src="../dist/index.umd.js"></script>
+      <script>
+        function test1() {
+          myLucky.defaultStyle.background = "#ddd";
         }
-      })
-    </script>
+        let prizes = [
+          {
+            fonts: [
+              { text: "500X", top: "10%", fontSize: "8px", fontColor: "#fff" },
+            ],
+            angle: 12,
+            background: "#0f172b",
+          },
+          {
+            fonts: [{ text: "166X", top: "10%", fontColor: "#fff" }],
+            angle: 12,
+            background: "#1e2939",
+          },
+          {
+            fonts: [{ text: "83.3X", top: "10%", fontColor: "#fff" }],
+            angle: 14,
+            background: "#0f172b",
+          },
+          {
+            fonts: [{ text: "50X", top: "10%", fontColor: "#fff" }],
+            angle: 16,
+            background: "#1e2939",
+          },
+          {
+            fonts: [{ text: "33.3X", top: "10%", fontColor: "#fff" }],
+            angle: 19,
+            background: "#0f172b",
+          },
+          {
+            fonts: [{ text: "23.8X", top: "10%", fontColor: "#fff" }],
+            angle: 22,
+            background: "#1e2939",
+          },
+          {
+            fonts: [{ text: "17.8X", top: "10%", fontColor: "#fff" }],
+            angle: 26,
+            background: "#0f172b",
+          },
+          {
+            fonts: [{ text: "13.8X", top: "10%", fontColor: "#fff" }],
+            angle: 29,
+            background: "#1e2939",
+          },
+          {
+            fonts: [{ text: "11.1X", top: "10%", fontColor: "#fff" }],
+            angle: 32,
+            background: "#0f172b",
+          },
+          {
+            fonts: [{ text: "9X", top: "10%", fontColor: "#fff" }],
+            angle: 34,
+            background: "#1e2939",
+          },
+          {
+            fonts: [{ text: "7.9X", top: "10%", fontColor: "#fff" }],
+            angle: 35,
+            background: "#0f172b",
+          },
+          {
+            fonts: [{ text: "7.2X", top: "10%", fontColor: "#fff" }],
+            angle: 35,
+            background: "#1e2939",
+          },
+          {
+            fonts: [{ text: "6.8X", top: "10%", fontColor: "#fff" }],
+            angle: 36,
+            background: "#0f172b",
+          },
+          {
+            fonts: [{ text: "6.6X", top: "10%", fontColor: "#fff" }],
+            angle: 38,
+            background: "#1e2939",
+          },
+        ];
+        prizes.forEach((prize) => {
+          prize.fonts[0].fontSize = "9px";
+          prize.fonts[0].fontWeight = "600";
+        });
+        const myLucky = new LuckyCanvas.LuckyWheel("#my-lucky", {
+          width: "400",
+          height: "400",
+          blocks: [
+            { padding: "2px", background: "#111" },
+            // { padding: "2px", background: "#ddd" },
+            // { padding: "2px", background: "#333" },
+            // { padding: "2px", background: "#ddd" },
+            // { padding: "2px", background: "#eee" },
+          ],
+          prizes,
+          buttons: [{ radius: "20%", background: "#fff" }],
+          defaultStyle: {
+            background: "#fff",
+          },
+          defaultConfig: {
+            gutter: 0,
+            stopRange: 0,
+            offsetDegree: 0.3,
+          },
+          start() {
+            myLucky.play();
+            setTimeout(() => {
+              myLucky.stop(0);
+            });
+          },
+          select(prizes) {
+            console.log(prizes);
+          },
+        });
+      </script>
+    </body>
   </body>
-</body>
 </html>

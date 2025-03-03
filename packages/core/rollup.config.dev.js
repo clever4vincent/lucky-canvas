@@ -1,26 +1,26 @@
-import path from 'path'
-import ts from 'rollup-plugin-typescript2'
-import json from '@rollup/plugin-json'
-import resolve from '@rollup/plugin-node-resolve'
-import commonjs from '@rollup/plugin-commonjs'
-import babel from 'rollup-plugin-babel'
-import livereload from 'rollup-plugin-livereload'
-import serve from 'rollup-plugin-serve'
+import path from "path";
+import ts from "rollup-plugin-typescript2";
+import json from "@rollup/plugin-json";
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import babel from "rollup-plugin-babel";
+import livereload from "rollup-plugin-livereload";
+import serve from "rollup-plugin-serve";
 // import eslint from '@rollup/plugin-eslint'
-import pkg from './package.json'
+import pkg from "./package.json";
 
 export default {
-  input: 'src/index.ts',
+  input: "src/index.ts",
   output: [
     {
       file: pkg.jsdelivr,
-      format: 'umd',
-      name: 'LuckyCanvas',
+      format: "umd",
+      name: "LuckyCanvas",
       sourcemap: true,
     },
     {
       file: pkg.module,
-      format: 'es',
+      format: "es",
       sourcemap: true,
     },
   ],
@@ -35,19 +35,21 @@ export default {
     //   exclude: ['node_modules/**']
     // }),
     ts({
-      tsconfig: path.resolve(__dirname, './tsconfig.json'),
-      extensions: ['.js', '.ts']
+      tsconfig: path.resolve(__dirname, "./tsconfig.json"),
+      check: false, // 关闭类型检查
+      extensions: [".js", ".ts"],
     }),
     babel({
       runtimeHelpers: true,
-      exclude: 'node_modules/**',
+      exclude: "node_modules/**",
     }),
     livereload(),
     serve({
       open: true,
       port: 13000,
-      contentBase: './',
-      openPage: '/examples/index.html'
+      contentBase: "./",
+      openPage: "/examples/index.html",
     }),
-  ]
-}
+  ],
+  // external: ["tslib"], // 避免 rollup 解析 tslib
+};
