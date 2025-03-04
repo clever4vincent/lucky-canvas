@@ -133,6 +133,8 @@ export default class LuckyWheel extends Lucky {
         gutter: "0px",
         offsetDegree: 0,
         speed: 20,
+        autoAngle: true, // 默认自动平分
+        canSelect: false, // 默认自动平分
         speedFunction: "quad",
         accelerationTime: 2500,
         decelerationTime: 2500,
@@ -307,10 +309,24 @@ export default class LuckyWheel extends Lucky {
   // 修改点击事件处理逻辑
   protected handleClick(e: MouseEvent): void {
     if (this.step !== 0) return; // 旋转时禁用交互
-
     const { ctx } = this;
     const [x, y] = this.conversionAxis(e.offsetX, e.offsetY);
 
+    // 坐标系重置保护
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    // const [x, y] = this.conversionAxis(e.offsetX, e.offsetY);
+    // ctx.translate(this.Radius, this.Radius);
+    // 优先检测按钮点击
+    ctx.beginPath();
+    ctx.arc(0, 0, this.maxBtnRadius, 0, Math.PI * 2);
+    if (ctx.isPointInPath(x, y)) {
+      ctx.restore();
+      this.startCallback?.(e);
+      return;
+    }
+    ctx.restore();
+    if (!this._defaultConfig.canSelect) return;
     // 检测扇形区域点击
     // const angle = Math.atan2(y, x) + Math.PI / 2;
     const angle =
@@ -323,7 +339,10 @@ export default class LuckyWheel extends Lucky {
 
     let accumulated = 0;
     const foundIndex = this.prizes.findIndex((prize) => {
-      const prizeAng = getAngle(prize.angle!);
+      const prizeAng = getAngle(
+        this._defaultConfig.autoAngle ? this.prizeDeg : prize.angle!
+      );
+
       const result =
         currentAngle >= accumulated && currentAngle < accumulated + prizeAng;
       accumulated += prizeAng;
@@ -438,7 +457,10 @@ export default class LuckyWheel extends Lucky {
     let start = getAngle(
       this.rotateDeg -
         90 +
-        getAngle(this.prizes[0].angle!) / 2 +
+        getAngle(
+          this._defaultConfig.autoAngle ? this.prizeAng : this.prizes[0].angle!
+        ) /
+          2 +
         _defaultConfig.offsetDegree
     );
 
@@ -470,7 +492,13 @@ export default class LuckyWheel extends Lucky {
     let accumulatedDeg = 0;
     // 绘制prizes奖品区域
     this.prizes.forEach((prize, prizeIndex) => {
-      const currentDeg = prize.angle;
+      let currentDeg;
+      if (this._defaultConfig.autoAngle) {
+        currentDeg = this.prizeDeg;
+      } else {
+        currentDeg = prize.angle;
+      }
+
       const currentAng = getAngle(currentDeg!);
 
       // // 新的起始角度计算方式

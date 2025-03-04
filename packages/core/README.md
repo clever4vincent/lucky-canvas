@@ -1,5 +1,3 @@
-
-
 <div align="center">
   <img src="https://unpkg.com/buuing@0.0.1/imgs/lucky-canvas.png" width="128" alt="logo" />
   <h1>lucky-canvas 抽奖插件</h1>
@@ -22,12 +20,11 @@
 
 <br />
 
-## 官方文档 & Demo演示
+## 官方文档 & Demo 演示
 
-> **中文**：[https://100px.net/usage/js.html](https://100px.net/usage/js.html)  
+> **中文**：[https://100px.net/usage/js.html](https://100px.net/usage/js.html)
 
 > **English**：**If anyone can help translate the document, please contact me** `ldq404@qq.com`
-
 
 <br />
 
@@ -37,6 +34,6 @@
 
 <br />
 
-## 🙏🙏🙏 点个Star
+## 🙏🙏🙏 点个 Star
 
-**如果您觉得这个项目还不错, 可以在 [Github](https://github.com/buuing/lucky-canvas) 上面帮我点个`star`, 支持一下作者 ☜(ﾟヮﾟ☜)**
+**如果您觉得这个项目还不错, 可以在 [Github](https://github.com/buuing/lucky-canvas) 上面帮我点个`star`, 支持一下作者 ☜(ﾟヮﾟ ☜)**

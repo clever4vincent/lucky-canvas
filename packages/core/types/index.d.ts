@@ -225,6 +225,8 @@ type DefaultConfigType$2 = {
     accelerationTime?: number;
     decelerationTime?: number;
     stopRange?: number;
+    autoAngle?: boolean;
+    canSelect?: boolean;
 };
 type DefaultStyleType$2 = {
     background?: BackgroundType;

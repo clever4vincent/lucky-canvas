@@ -53,6 +53,8 @@ export type DefaultConfigType = {
   accelerationTime?: number;
   decelerationTime?: number;
   stopRange?: number;
+  autoAngle?: boolean; // 新增：是否自动平分角度
+  canSelect?: boolean; // 新增：可以选择
 };
 
 export type DefaultStyleType = {

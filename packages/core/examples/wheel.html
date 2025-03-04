@@ -124,21 +124,24 @@
             // { padding: "2px", background: "#eee" },
           ],
           prizes,
-          buttons: [{ radius: "20%", background: "#fff" }],
+          buttons: [{ radius: "20px", background: "#fff" }],
           defaultStyle: {
             background: "#fff",
           },
           defaultConfig: {
+            // autoAngle: false,
+            canSelect: true,
             gutter: 0,
             stopRange: 0,
             offsetDegree: 0.3,
           },
-          start() {
-            myLucky.play();
-            setTimeout(() => {
-              myLucky.stop(0);
-            });
-          },
+          // start() {
+          //   console.log(12123);
+          //   myLucky.play();
+          //   setTimeout(() => {
+          //     myLucky.stop(0);
+          //   });
+          // },
           select(prizes) {
             console.log(prizes);
           },
