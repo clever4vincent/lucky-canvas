@@ -611,7 +611,7 @@ type DefaultConfigType = {
      * vertical 为纵向旋转
      * horizontal 为横向旋转
      */
-    mode?: 'vertical' | 'horizontal';
+    mode?: "vertical" | "horizontal";
     /**
      * 当排列方向 = `vertical`时
      *    1 bottom to top
@@ -624,20 +624,21 @@ type DefaultConfigType = {
     rowSpacing?: number;
     colSpacing?: number;
     speed?: number;
+    delayStep?: number;
     accelerationTime?: number;
     decelerationTime?: number;
 };
 type DefaultStyleType = {
     borderRadius?: BorderRadiusType;
     background?: BackgroundType;
-    fontColor?: PrizeFontType['fontColor'];
-    fontSize?: PrizeFontType['fontSize'];
-    fontStyle?: PrizeFontType['fontStyle'];
-    fontWeight?: PrizeFontType['fontWeight'];
-    lineHeight?: PrizeFontType['lineHeight'];
-    wordWrap?: PrizeFontType['wordWrap'];
-    lengthLimit?: PrizeFontType['lengthLimit'];
-    lineClamp?: PrizeFontType['lineClamp'];
+    fontColor?: PrizeFontType["fontColor"];
+    fontSize?: PrizeFontType["fontSize"];
+    fontStyle?: PrizeFontType["fontStyle"];
+    fontWeight?: PrizeFontType["fontWeight"];
+    lineHeight?: PrizeFontType["lineHeight"];
+    wordWrap?: PrizeFontType["wordWrap"];
+    lengthLimit?: PrizeFontType["lengthLimit"];
+    lineClamp?: PrizeFontType["lineClamp"];
 };
 type EndCallbackType = (prize: PrizeType | undefined) => void;
 interface SlotMachineConfig {
@@ -652,6 +653,8 @@ interface SlotMachineConfig {
 }
 
 declare class SlotMachine extends Lucky {
+    private startDelays;
+    private startTimes;
     private blocks;
     private prizes;
     private slots;
@@ -731,7 +734,7 @@ declare class SlotMachine extends Lucky {
     /**
      * 绘制背景区域
      */
-    protected drawBlocks(): SlotMachine['prizeArea'];
+    protected drawBlocks(): SlotMachine["prizeArea"];
     /**
      * 绘制老虎机抽奖
      */

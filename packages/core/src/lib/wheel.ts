@@ -537,14 +537,48 @@ export default class LuckyWheel extends Lucky {
         ctx.lineWidth = this.getLength(
           prize.activeBorderWidth || this._defaultStyle.activeBorderWidth
         );
-        fanShapedByArc(
-          ctx,
-          this.maxBtnRadius,
-          this.prizeRadius,
-          middleDeg - currentAng / 2,
-          middleDeg + currentAng / 2,
-          this.getLength(this._defaultConfig.gutter)
-        );
+
+        // 检查相邻扇形是否也被选中
+        const prevIndex =
+          (prizeIndex - 1 + this.prizes.length) % this.prizes.length;
+        const nextIndex = (prizeIndex + 1) % this.prizes.length;
+        const prevActive = this.activeIndices.has(prevIndex);
+        const nextActive = this.activeIndices.has(nextIndex);
+
+        const startAngle = middleDeg - currentAng / 2;
+        const endAngle = middleDeg + currentAng / 2;
+
+        // 绘制左侧直线
+        if (!prevActive) {
+          const leftX = Math.cos(startAngle) * this.maxBtnRadius;
+          const leftY = Math.sin(startAngle) * this.maxBtnRadius;
+          const leftX2 = Math.cos(startAngle) * this.prizeRadius;
+          const leftY2 = Math.sin(startAngle) * this.prizeRadius;
+          ctx.beginPath();
+          ctx.moveTo(leftX, leftY);
+          ctx.lineTo(leftX2, leftY2);
+          ctx.stroke();
+        }
+
+        // 绘制右侧直线
+        if (!nextActive) {
+          const rightX = Math.cos(endAngle) * this.maxBtnRadius;
+          const rightY = Math.sin(endAngle) * this.maxBtnRadius;
+          const rightX2 = Math.cos(endAngle) * this.prizeRadius;
+          const rightY2 = Math.sin(endAngle) * this.prizeRadius;
+          ctx.beginPath();
+          ctx.moveTo(rightX, rightY);
+          ctx.lineTo(rightX2, rightY2);
+          ctx.stroke();
+        }
+
+        // 绘制上下圆弧（始终绘制）
+        ctx.beginPath();
+        ctx.arc(0, 0, this.maxBtnRadius, startAngle, endAngle);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, this.prizeRadius, startAngle, endAngle);
         ctx.stroke();
       }
       accumulatedDeg += currentAng;
