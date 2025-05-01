@@ -72,6 +72,10 @@ export type DefaultStyleType = {
   activeBorderWidth?: string; // 边框宽度
   multipleSelectable?: boolean; // 是否允许多选
   activeFontColor?: ButtonFontType["fontColor"];
+  // 小圆球配置
+  circleRadius?: number; // 小圆球半径
+  circleColor?: string; // 小圆球颜色
+  circleVisible?: boolean; // 是否显示小圆球
 };
 
 export type StartCallbackType = (e: MouseEvent) => void;

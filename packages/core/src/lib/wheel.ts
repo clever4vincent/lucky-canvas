@@ -157,6 +157,9 @@ export default class LuckyWheel extends Lucky {
         activeBorder: "#FFA000", // 默认边框颜色
         activeFontColor: "#333", // 默认字体颜色
         activeBorderWidth: "2px", // 默认边框宽度
+        circleVisible: true,
+        circleRadius: 6,
+        circleColor: "",
         ...this.defaultStyle,
       };
       return style;
@@ -490,7 +493,7 @@ export default class LuckyWheel extends Lucky {
     };
     ctx.save();
     let accumulatedDeg = 0;
-    // 绘制prizes奖品区域
+    // 先绘制所有扇形
     this.prizes.forEach((prize, prizeIndex) => {
       let currentDeg;
       if (this._defaultConfig.autoAngle) {
@@ -501,14 +504,6 @@ export default class LuckyWheel extends Lucky {
 
       const currentAng = getAngle(currentDeg!);
 
-      // // 新的起始角度计算方式
-      // const start = getAngle(
-      //   this.rotateDeg -
-      //     90 +
-      //     accumulatedDeg +
-      //     currentAng / 2 +
-      //     _defaultConfig.offsetDegree
-      // );
       const isActive = this.activeIndices.has(prizeIndex);
       const middleDeg = start + accumulatedDeg + currentAng / 2;
       // 奖品区域可见高度
@@ -517,7 +512,6 @@ export default class LuckyWheel extends Lucky {
         ? prize.activeBackground || this._defaultStyle.activeBackground
         : prize.background || this._defaultStyle.background;
       // 绘制背景
-      // const background = prize.background || _defaultStyle.background;
       if (hasBackground(background)) {
         ctx.fillStyle = background;
         fanShapedByArc(
@@ -659,6 +653,57 @@ export default class LuckyWheel extends Lucky {
       ctx.rotate(getAngle(360) - middleDeg - getAngle(90));
       ctx.translate(-x, -y);
     });
+
+    // 在所有扇形绘制完成后，再绘制所有小圆
+    accumulatedDeg = 0;
+    this.prizes.forEach((prize, prizeIndex) => {
+      let currentDeg;
+      if (this._defaultConfig.autoAngle) {
+        currentDeg = this.prizeDeg;
+      } else {
+        currentDeg = prize.angle;
+      }
+
+      const currentAng = getAngle(currentDeg!);
+      const middleDeg = start + accumulatedDeg + currentAng / 2;
+
+      // 如果配置为不显示小圆球，则跳过绘制
+      if (!this._defaultStyle.circleVisible) {
+        accumulatedDeg += currentAng;
+        return;
+      }
+
+      // 使用配置的半径，如果没有配置则使用默认值6
+      const circleRadius = this._defaultStyle.circleRadius || 6;
+      const circleCenterRadius = this.prizeRadius - circleRadius / 2;
+
+      // 只在第一个扇形绘制左侧小圆，其他扇形只绘制右侧小圆
+      if (prizeIndex === 0) {
+        // 绘制左侧小圆
+        const leftAngle = middleDeg - currentAng / 2;
+        const leftX = Math.cos(leftAngle) * circleCenterRadius;
+        const leftY = Math.sin(leftAngle) * circleCenterRadius;
+        ctx.beginPath();
+        ctx.arc(leftX, leftY, circleRadius, 0, Math.PI * 2);
+        // 使用配置的颜色，如果没有配置则使用blocks[0]的背景色
+        ctx.fillStyle =
+          this._defaultStyle.circleColor || this.blocks[0].background!;
+        ctx.fill();
+      }
+
+      // 绘制右侧小圆
+      const rightAngle = middleDeg + currentAng / 2;
+      const rightX = Math.cos(rightAngle) * circleCenterRadius;
+      const rightY = Math.sin(rightAngle) * circleCenterRadius;
+      ctx.beginPath();
+      ctx.arc(rightX, rightY, circleRadius, 0, Math.PI * 2);
+      ctx.fillStyle =
+        this._defaultStyle.circleColor || this.blocks[0].background!;
+      ctx.fill();
+
+      accumulatedDeg += currentAng;
+    });
+
     ctx.restore();
     // 绘制按钮
     this.buttons.forEach((btn, btnIndex) => {

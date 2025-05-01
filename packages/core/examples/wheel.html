@@ -35,78 +35,80 @@
         function test1() {
           myLucky.defaultStyle.background = "#ddd";
         }
+        let oneColor = "#0f172b";
+        let twoColor = "#1e2939";
         let prizes = [
           {
             fonts: [
               { text: "500X", top: "10%", fontSize: "8px", fontColor: "#fff" },
             ],
             angle: 12,
-            background: "#0f172b",
+            background: oneColor,
           },
           {
             fonts: [{ text: "166X", top: "10%", fontColor: "#fff" }],
             angle: 12,
-            background: "#1e2939",
+            background: twoColor,
           },
           {
             fonts: [{ text: "83.3X", top: "10%", fontColor: "#fff" }],
             angle: 14,
-            background: "#0f172b",
+            background: oneColor,
           },
           {
             fonts: [{ text: "50X", top: "10%", fontColor: "#fff" }],
             angle: 16,
-            background: "#1e2939",
+            background: twoColor,
           },
           {
             fonts: [{ text: "33.3X", top: "10%", fontColor: "#fff" }],
             angle: 19,
-            background: "#0f172b",
+            background: oneColor,
           },
           {
             fonts: [{ text: "23.8X", top: "10%", fontColor: "#fff" }],
             angle: 22,
-            background: "#1e2939",
+            background: twoColor,
           },
           {
             fonts: [{ text: "17.8X", top: "10%", fontColor: "#fff" }],
             angle: 26,
-            background: "#0f172b",
+            background: oneColor,
           },
           {
             fonts: [{ text: "13.8X", top: "10%", fontColor: "#fff" }],
             angle: 29,
-            background: "#1e2939",
+            background: twoColor,
           },
           {
             fonts: [{ text: "11.1X", top: "10%", fontColor: "#fff" }],
             angle: 32,
-            background: "#0f172b",
+            background: oneColor,
           },
           {
             fonts: [{ text: "9X", top: "10%", fontColor: "#fff" }],
             angle: 34,
-            background: "#1e2939",
+            background: twoColor,
           },
           {
             fonts: [{ text: "7.9X", top: "10%", fontColor: "#fff" }],
             angle: 35,
-            background: "#0f172b",
+            background: oneColor,
           },
           {
             fonts: [{ text: "7.2X", top: "10%", fontColor: "#fff" }],
             angle: 35,
-            background: "#1e2939",
+            background: twoColor,
           },
           {
             fonts: [{ text: "6.8X", top: "10%", fontColor: "#fff" }],
             angle: 36,
-            background: "#0f172b",
+            background: oneColor,
           },
           {
             fonts: [{ text: "6.6X", top: "10%", fontColor: "#fff" }],
             angle: 38,
-            background: "#1e2939",
+            background: twoColor,
           },
         ];
         prizes.forEach((prize) => {
@@ -117,35 +119,141 @@
           width: "400",
           height: "400",
           blocks: [
-            { padding: "2px", background: "#111" },
+            { padding: "2px", background: "#f5f5f5" },
             // { padding: "2px", background: "#ddd" },
             // { padding: "2px", background: "#333" },
             // { padding: "2px", background: "#ddd" },
             // { padding: "2px", background: "#eee" },
           ],
           prizes,
-          buttons: [{ radius: "20px", background: "#fff" }],
+          buttons: [{ radius: "20px", background: "#fff", pointer: true }],
           defaultStyle: {
             background: "#fff",
           },
           defaultConfig: {
-            // autoAngle: false,
+            autoAngle: false,
             canSelect: true,
-            gutter: 0,
+            gutter: 2,
             stopRange: 0,
-            offsetDegree: 0.3,
+            offsetDegree: 0.8,
           },
-          // start() {
-          //   console.log(12123);
-          //   myLucky.play();
-          //   setTimeout(() => {
-          //     myLucky.stop(0);
-          //   });
-          // },
+          start() {
+            console.log(12123);
+            myLucky.play();
+            setTimeout(() => {
+              myLucky.stop(3);
+            });
+          },
           select(prizes) {
             console.log(prizes);
           },
         });
+
+        // const config = {
+        //   width: "300px",
+        //   height: "300px",
+        //   blocks: [
+        //     {
+        //       padding: "10px",
+        //       background: "linear-gradient(180deg, #FFD54F 0%, #FFA000 100%)",
+        //     },
+        //     {
+        //       padding: "1px",
+        //       background: "#ffffff",
+        //     },
+        //   ],
+        //   prizes: [
+        //     {
+        //       fonts: [{ text: "9.9", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //     {
+        //       fonts: [{ text: "8.9", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //     {
+        //       fonts: [{ text: "7.2", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //     {
+        //       fonts: [{ text: "7.9", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //     {
+        //       fonts: [{ text: "6", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //     {
+        //       fonts: [{ text: "11.1", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //     {
+        //       fonts: [{ text: "13.8", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //     {
+        //       fonts: [{ text: "17.8", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //     {
+        //       fonts: [{ text: "23.8", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //     {
+        //       fonts: [{ text: "33.3", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //     {
+        //       fonts: [{ text: "50", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //     {
+        //       fonts: [{ text: "83.3", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //     {
+        //       fonts: [{ text: "166", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //     {
+        //       fonts: [{ text: "500", top: "25%", fontSize: "18px" }],
+        //       background: "linear-gradient(180deg, #BA68C8 0%, #9C27B0 100%)",
+        //     },
+        //   ],
+        //   buttons: [
+        //     {
+        //       radius: "12%",
+        //       background: "linear-gradient(180deg, #64FFDA 0%, #1DE9B6 100%)",
+        //       pointer: true,
+        //       fonts: [{ text: "", top: "0" }],
+        //     },
+        //   ],
+        //   defaultStyle: {
+        //     fontSize: "18px",
+        //     fontColor: "#ffffff",
+        //     fontWeight: "700",
+        //     fontStyle: "Arial",
+        //     wordWrap: false,
+        //   },
+        //   defaultConfig: {
+        //     gutter: "2px",
+        //     stopRange: 0.8,
+        //     offsetDegree: 0,
+        //   },
+        //   start() {
+        //     console.log(12123);
+        //     myLucky.play();
+        //     setTimeout(() => {
+        //       myLucky.stop(0);
+        //     });
+        //   },
+        // };
+        // // 创建抽奖组件
+        // const myLucky = new LuckyCanvas.LuckyWheel("#my-lucky", {
+        //   width: "300px",
+        //   height: "300px",
+        //   ...config,
+        // });
       </script>
     </body>
   </body>
