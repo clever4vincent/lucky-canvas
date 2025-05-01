@@ -5,7 +5,10 @@ import {
   FontExtendType,
 } from "./index";
 
-export type PrizeFontType = FontItemType & FontExtendType;
+export type PrizeFontType = FontItemType &
+  FontExtendType & {
+    textDirection?: "horizontal" | "vertical"; // 文字方向，水平或垂直
+  };
 
 export type ButtonFontType = FontItemType & {};
 
@@ -76,6 +79,8 @@ export type DefaultStyleType = {
   circleRadius?: number; // 小圆球半径
   circleColor?: string; // 小圆球颜色
   circleVisible?: boolean; // 是否显示小圆球
+  // 文字方向配置
+  textDirection?: "horizontal" | "vertical"; // 文字方向，水平或垂直
 };
 
 export type StartCallbackType = (e: MouseEvent) => void;

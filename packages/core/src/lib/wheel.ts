@@ -615,6 +615,9 @@ export default class LuckyWheel extends Lucky {
             : _defaultStyle.wordWrap;
           const lengthLimit = font.lengthLimit || _defaultStyle.lengthLimit;
           const lineClamp = font.lineClamp || _defaultStyle.lineClamp;
+          const textDirection =
+            font.textDirection || _defaultStyle.textDirection || "horizontal";
+
           ctx.fillStyle = fontColor;
           ctx.font = `${fontWeight} ${fontSize >> 0}px ${fontStyle}`;
           let lines = [],
@@ -639,15 +642,51 @@ export default class LuckyWheel extends Lucky {
           } else {
             lines = text.split("\n");
           }
-          lines
-            .filter((line) => !!line)
-            .forEach((line, lineIndex) => {
-              ctx.fillText(
-                line,
-                getFontX(font, line),
-                getFontY(font, prizeHeight, lineIndex)
-              );
+
+          // 根据文字方向选择不同的绘制方式
+          if (textDirection === "vertical") {
+            // 垂直方向绘制
+            const lineHeight = this.getLength(
+              font.lineHeight || _defaultStyle.lineHeight || fontSize
+            );
+            const totalHeight = lines.length * lineHeight;
+            const startY = -totalHeight / 2; // 从中心点开始向上绘制
+
+            // 计算top偏移
+            const topOffset = font.top
+              ? this.getLength(font.top, prizeHeight)
+              : 0;
+
+            lines.forEach((line, lineIndex) => {
+              // 计算每个字符的位置
+              const chars = line.split("");
+              chars.forEach((char, charIndex) => {
+                const charWidth = ctx.measureText(char).width;
+                const x = -charWidth / 2; // 字符水平居中
+                const y =
+                  startY +
+                  lineIndex * lineHeight +
+                  charIndex * fontSize +
+                  topOffset;
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(Math.PI / 2); // 旋转90度
+                ctx.fillText(char, 0, 0);
+                ctx.restore();
+              });
             });
+          } else {
+            // 水平方向绘制（原有逻辑）
+            lines
+              .filter((line) => !!line)
+              .forEach((line, lineIndex) => {
+                ctx.fillText(
+                  line,
+                  getFontX(font, line),
+                  getFontY(font, prizeHeight, lineIndex)
+                );
+              });
+          }
         });
       // 修正旋转角度和原点坐标
       ctx.rotate(getAngle(360) - middleDeg - getAngle(90));
