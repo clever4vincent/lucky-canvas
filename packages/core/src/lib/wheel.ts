@@ -408,7 +408,7 @@ export default class LuckyWheel extends Lucky {
     blockIndex: number
   ): void {
     const { ctx } = this;
-    if (hasBackground(block.background)) {
+    if (hasBackground(block.background) && !block.imgs?.[0].src) {
       ctx.beginPath();
       ctx.fillStyle = block.background!;
       ctx.arc(0, 0, radius, 0, Math.PI * 2, false);
@@ -418,19 +418,32 @@ export default class LuckyWheel extends Lucky {
       block.imgs.forEach((imgInfo, imgIndex) => {
         const blockImg = this.ImageCache.get(imgInfo.src);
         if (!blockImg) return;
-        // 绘制图片
-        const [trueWidth, trueHeight] = this.computedWidthAndHeight(
-          blockImg,
-          imgInfo,
-          radius * 2,
-          radius * 2
-        );
-        const [xAxis, yAxis] = [
-          this.getOffsetX(trueWidth) + this.getLength(imgInfo.left, radius * 2),
-          this.getLength(imgInfo.top, radius * 2) - radius,
-        ];
+
         ctx.save();
-        imgInfo.rotate && ctx.rotate(getAngle(this.rotateDeg));
+
+        // 添加旋转
+        ctx.rotate(getAngle(this.rotateDeg));
+
+        // 创建圆形裁剪区域
+        ctx.beginPath();
+        ctx.arc(0, 0, radius, 0, Math.PI * 2, false);
+        ctx.clip();
+
+        // 计算保持宽高比的尺寸
+        const imgWidth = blockImg.width || blockImg.naturalWidth;
+        const imgHeight = blockImg.height || blockImg.naturalHeight;
+        const scale = Math.max(
+          (radius * 2) / imgWidth,
+          (radius * 2) / imgHeight
+        );
+        const trueWidth = imgWidth * scale;
+        const trueHeight = imgHeight * scale;
+
+        // 居中绘制图片
+        const xAxis = -trueWidth / 2;
+        const yAxis = -trueHeight / 2;
+
+        // 绘制图片
         this.drawImage(ctx, blockImg, xAxis, yAxis, trueWidth, trueHeight);
         ctx.restore();
       });
@@ -512,8 +525,14 @@ export default class LuckyWheel extends Lucky {
         ? prize.activeBackground || this._defaultStyle.activeBackground
         : prize.background || this._defaultStyle.background;
       // 绘制背景
-      if (hasBackground(background)) {
-        ctx.fillStyle = background;
+      if (hasBackground(background) && isActive) {
+        // 设置半透明背景色
+        const color = background.startsWith("rgba")
+          ? background
+          : background.startsWith("rgb")
+          ? background.replace("rgb", "rgba").replace(")", ", 0.5)")
+          : `${background}80`; // 添加50%透明度
+        ctx.fillStyle = color;
         fanShapedByArc(
           ctx,
           this.maxBtnRadius,
