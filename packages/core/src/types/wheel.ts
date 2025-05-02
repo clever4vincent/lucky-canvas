@@ -8,6 +8,7 @@ import {
 export type PrizeFontType = FontItemType &
   FontExtendType & {
     textDirection?: "horizontal" | "vertical"; // 文字方向，水平或垂直
+    fontVisible?: boolean; // 是否显示文字
   };
 
 export type ButtonFontType = FontItemType & {};
@@ -81,6 +82,7 @@ export type DefaultStyleType = {
   circleVisible?: boolean; // 是否显示小圆球
   // 文字方向配置
   textDirection?: "horizontal" | "vertical"; // 文字方向，水平或垂直
+  fontVisible?: boolean; // 是否显示文字
 };
 
 export type StartCallbackType = (e: MouseEvent) => void;

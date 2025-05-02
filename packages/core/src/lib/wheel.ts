@@ -160,6 +160,7 @@ export default class LuckyWheel extends Lucky {
         circleVisible: true,
         circleRadius: 6,
         circleColor: "",
+        fontVisible: true, // 默认显示文字
         ...this.defaultStyle,
       };
       return style;
@@ -621,6 +622,13 @@ export default class LuckyWheel extends Lucky {
       // 逐行绘制文字
       prize.fonts &&
         prize.fonts.forEach((font) => {
+          // 检查是否显示文字
+          if (
+            font.fontVisible === false ||
+            (!has(font, "fontVisible") && !this._defaultStyle.fontVisible)
+          ) {
+            return;
+          }
           const fontColor = isActive
             ? prize.activeFontColor || _defaultStyle.activeFontColor
             : font.fontColor || _defaultStyle.fontColor;
