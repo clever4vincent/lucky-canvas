@@ -527,12 +527,15 @@ export default class LuckyWheel extends Lucky {
         : prize.background || this._defaultStyle.background;
       // 绘制背景
       if (hasBackground(background) && isActive) {
-        // 设置半透明背景色
+        // 设置透明度
+        const opacity = this._defaultStyle.opacity ?? 0.5;
         const color = background.startsWith("rgba")
           ? background
           : background.startsWith("rgb")
-          ? background.replace("rgb", "rgba").replace(")", ", 0.8)")
-          : `${background}80`; // 添加50%透明度
+          ? background.replace("rgb", "rgba").replace(")", `, ${opacity})`)
+          : `${background}${Math.round(opacity * 255)
+              .toString(16)
+              .padStart(2, "0")}`;
         ctx.fillStyle = color;
         fanShapedByArc(
           ctx,

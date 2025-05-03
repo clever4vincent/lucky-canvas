@@ -83,6 +83,7 @@ export type DefaultStyleType = {
   // 文字方向配置
   textDirection?: "horizontal" | "vertical"; // 文字方向，水平或垂直
   fontVisible?: boolean; // 是否显示文字
+  opacity?: number; // 透明度 0-1
 };
 
 export type StartCallbackType = (e: MouseEvent) => void;
