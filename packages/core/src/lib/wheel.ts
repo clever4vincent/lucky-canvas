@@ -531,7 +531,7 @@ export default class LuckyWheel extends Lucky {
         const color = background.startsWith("rgba")
           ? background
           : background.startsWith("rgb")
-          ? background.replace("rgb", "rgba").replace(")", ", 0.5)")
+          ? background.replace("rgb", "rgba").replace(")", ", 0.8)")
           : `${background}80`; // 添加50%透明度
         ctx.fillStyle = color;
         fanShapedByArc(
